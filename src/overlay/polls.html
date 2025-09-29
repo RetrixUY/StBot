@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Polls & Predictions</title>
+  <link rel="stylesheet" href="./styles/polls.css" />
+</head>
+<body>
+  <div id="pollCard" class="poll-card hidden">
+    <div id="pollTitle" class="poll-title">—</div>
+    <div id="pollRows" class="poll-rows"></div>
+    <div class="poll-footer">
+      <span id="pollStatus">En Curso</span>
+      <span id="pollTotal">0 votos</span>
+    </div>
+    <div id="timebar" class="timebar"><div id="timefill" class="timefill"></div></div>
+  </div>
+
+  <div id="audio-assets" style="display: none;">
+      <audio id="sfx-poll" src="./sounds/poll.mp3" preload="auto"></audio>
+  </div>
+  <script type="module" src="./script/polls.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+
+/* Escala respecto al viewport de la Browser Source */
+:root{
+  --neon-rgb: 168,85,247;
+
+  /* márgenes del borde del overlay */
+  --edge-x: clamp(10px, 1.4vw, 24px);
+  --edge-y: clamp(10px, 1.4vh, 24px);
+
+  /* espaciados / forma */
+  --gap:    clamp(8px,  1.0vh, 14px);
+  --pad:    clamp(10px, 1.2vh, 18px);
+  --radius: clamp(10px, 1.2vh, 18px);
+
+  /* tipografías */
+  --fs-title: clamp(13px, 1.6vw, 20px);
+  --fs-msg:   clamp(12px, 1.3vw, 18px);
+
+  /* alto mínimo del toast */
+  --toast-min-h: clamp(36px, 4.2vh, 64px);
+}
+
+html,body{
+  margin:0; background:transparent; height:100%;
+  color:#fff; font-family:"Roboto",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* El contenedor ocupa TODO el overlay */
+.alerts{
+  position: fixed;
+  inset: 0;               /* 100vw x 100vh */
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Cada toast llena el ancho con márgenes laterales; se apilan por JS usando top */
+.toast{
+  position: absolute;
+  left:  var(--edge-x);
+  right: var(--edge-x);
+  /* el "top" lo setea tu JS (layout) sumando --edge-y como offset inicial */
+  min-height: var(--toast-min-h);
+
+  display: flex; flex-direction: column; justify-content: center;
+  gap: calc(var(--gap) * .35);
+  padding: 0 var(--pad);
+  border-radius: var(--radius);
+  pointer-events: auto;
+
+  color:#fff;
+  text-shadow:0 0 .4vh rgba(var(--neon-rgb), .65),
+              0 0 1.4vh rgba(var(--neon-rgb), .45),
+              0 .12vh .36vh rgba(0,0,0,.55);
+
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,.28), rgba(255,255,255,.28)),
+    radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px),
+    rgba(26, 0, 39, .18);
+  background-size: auto, .18vh .18vh, auto;
+  background-blend-mode: normal, overlay, screen;
+
+  border: 1px solid rgba(233,213,255,.35);
+  backdrop-filter: blur(.7vh) saturate(130%) brightness(110%);
+  -webkit-backdrop-filter: blur(.7vh) saturate(130%) brightness(110%);
+  box-shadow:
+    0 0 1.5vh rgba(var(--neon-rgb), .55),
+    0 0 3.0vh rgba(var(--neon-rgb), .30),
+    0 .5vh 1.3vh rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.20);
+
+  opacity: 0;
+  transform: translateY(-60%);   /* solo vertical */
+  will-change: transform, opacity, top;
+}
+
+/* títulos y mensajes */
+.toast__title{ font-weight:900; font-size: var(--fs-title); line-height:1.2; }
+.toast__message{ font-weight:700; font-size: var(--fs-msg); line-height:1.2; opacity:.95; }
+.toast.toast--hasmsg{ padding: calc(var(--pad)*.6) var(--pad); }
+
+/* animaciones (sin traducción horizontal) */
+.toast.enter{ animation: toast-in 260ms cubic-bezier(.2,.8,.2,1) forwards; }
+.toast.leave{ animation: toast-out 420ms ease forwards; }
+
+@keyframes toast-in  { 0%{opacity:0; transform:translateY(-60%)} 100%{opacity:1; transform:translateY(0)} }
+@keyframes toast-out { 0%{opacity:1; transform:translateY(0)}    100%{opacity:0; transform:translateY(40%)} }
+
+/* (Opcional) barra de vida si tu JS la usa */
+.life{
+  margin-top: calc(var(--gap) * .35);
+  height: clamp(4px, .8vh, 6px);
+  border-radius: 999px; overflow: hidden;
+  background: rgba(255,255,255,.20);
+  border:1px solid rgba(233,213,255,.35);
+  box-shadow: inset 0 0 .4vh rgba(var(--neon-rgb), .35),
+              inset 0 0 1.2vh rgba(var(--neon-rgb), .25);
+}
+.life > i{
+  display:block; height:100%; width:100%;
+  background:
+    radial-gradient(closest-side, rgba(233,213,255,1) 40%, rgba(233,213,255,0) 70%) center/.36vh 100% no-repeat,
+    linear-gradient(90deg, rgba(233,213,255,1), rgba(192,132,252,1), rgba(168,85,247,1));
+  filter: drop-shadow(0 0 .75vh rgba(var(--neon-rgb), .75))
+          drop-shadow(0 0 1.6vh rgba(var(--neon-rgb), .45));
+  transform-origin:left center;
+  transition: width .2s linear;
+}

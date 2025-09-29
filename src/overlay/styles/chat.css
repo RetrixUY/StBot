@@ -1,0 +1,132 @@
+/* ***** CAMBIO: Importar la fuente Roboto ***** */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+
+:root {
+  /* ***** CAMBIO: Adoptar las variables de color y layout de alerts.css ***** */
+  --neon-base: #a855f7;
+  --neon-rgb: 168, 85, 247;
+  --pad: clamp(10px, 1.4vw, 20px);
+  --gap: clamp(8px, 1vw, 16px);
+  --radius: clamp(12px, 1.2vw, 18px);
+  
+  --chat-font-size: 16px;
+  --emote-size: 28px;
+  --badge-size: 18px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: "Roboto", sans-serif;
+  color: #fff; /* Texto blanco por defecto */
+  font-size: var(--chat-font-size);
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+#chat-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: var(--gap); /* Usar variable consistente para el padding */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: stretch; /* <-- CAMBIO: Mensajes ocupan todo el ancho */
+  overflow: hidden;
+  gap: var(--gap); /* <-- CAMBIO: Espaciado consistente entre mensajes */
+  
+  -webkit-mask-image: linear-gradient(to top, black 75%, transparent 100%);
+  mask-image: linear-gradient(to top, black 75%, transparent 100%);
+}
+
+.chat-line {
+  /* ***** CAMBIO: Reemplazar el estilo con el de alerts.css ***** */
+  display: flex; /* Usar flex para alinear contenido */
+  align-items: flex-start; /* Alinear al inicio para mensajes largos */
+  gap: calc(var(--gap) * 0.8);
+  padding: var(--pad);
+  border-radius: var(--radius);
+  
+  background: 
+    linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+    rgba(26,0,39,.18);
+  
+  border: 1px solid rgba(233,213,255,.35);
+  backdrop-filter: blur(0.7vh) saturate(130%) brightness(110%);
+  -webkit-backdrop-filter: blur(0.7vh) saturate(130%) brightness(110%);
+  box-shadow: 
+    0 0 1.5vh rgba(var(--neon-rgb), .55), 
+    0 0 3.8vh rgba(var(--neon-rgb), .35), 
+    0 .6vh 1.8vh rgba(0,0,0,.26), 
+    inset 0 0 0 1px rgba(255,255,255,.25);
+
+  animation: slideIn 0.4s ease forwards;
+  word-wrap: break-word;
+  line-height: 1.5;
+  margin-top: 0; /* Ya no es necesario con flex-gap */
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-line .meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+  flex-shrink: 0; /* Evita que los badges se achiquen */
+}
+
+.chat-line .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  vertical-align: middle;
+}
+
+.chat-line .badge svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chat-line .username {
+  font-weight: 900;
+  vertical-align: middle;
+  /* ***** CAMBIO: Sombra de texto estilo neón ***** */
+  text-shadow: 
+    0 0 .4vh rgba(var(--neon-rgb), .65), 
+    0 0 1.4vh rgba(var(--neon-rgb), .45), 
+    0 .12vh .36vh rgba(0,0,0,.55);
+}
+
+.chat-line .message {
+  display: inline;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+.chat-line img.emote {
+  height: var(--emote-size);
+  width: auto;
+  margin: -5px 2px;
+  vertical-align: middle;
+}
+
+/* Animación para mensajes borrados */
+.chat-line.deleted {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(20px); }
+}

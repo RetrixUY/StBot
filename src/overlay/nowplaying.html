@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Now Playing</title>
+  <link rel="stylesheet" href="./styles/nowplaying.css" />
+</head>
+<body>
+  <div id="nowplaying" class="nowplaying">
+    <img id="cover" alt="" />
+    <div class="meta">
+      <div class="title" id="track">—</div>
+      <div class="artists" id="artists">—</div>
+      <div class="progress">
+        <div class="bar"><div class="bar__fill" id="barFill"></div></div>
+        <div class="times">
+          <span id="elapsed">0:00</span>
+          <span id="total">0:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./script/nowplaying.js"></script>
+</body>
+</html>
