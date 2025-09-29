@@ -33,7 +33,7 @@ Follow these steps to get the project up and running.
 ### 1. Prerequisites
 
 * **Node.js**: v18 or higher.
-* **Streamer.bot**: With the Kick extension configured.
+* **Streamer.bot**: With the [Kick extension configured](https://github.com/Sehelitar/Kick.bot).
 * **Spotify Developer Account**: You will need to create an application on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) to get your credentials.
 
 ### 2. Installation
