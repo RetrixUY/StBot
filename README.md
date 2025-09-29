@@ -1,6 +1,9 @@
 <div align="right">
   <a href="README.md">🇪🇸 Español</a> | <a href="README.en.md">🇬🇧 English</a>
 </div>
+
+---
+
 # StBot - Overlays y Alertas para Streaming
 
 [![Licencia: CC BY-NC-SA 4.0](https://img.shields.io/badge/Licencia-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
