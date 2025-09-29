@@ -1,11 +1,40 @@
 {
-  "name": "udp-json-logger",
+  "name": "stbot",
+  "version": "1.0.0",
+  "description": "Backend para overlays de streaming (alertas, chat, Spotify) para Kick, impulsado por Node.js y Streamer.bot.",
+  "author": "RetrixUY",
+  "license": "CC-BY-NC-SA-4.0",
+  "private": false,
   "type": "module",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc -p tsconfig.json"
   },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "streaming",
+    "stream-overlays",
+    "obs",
+    "kick",
+    "streamerbot",
+    "spotify",
+    "spotify-api",
+    "sse",
+    "alerts",
+    "chat-overlay",
+    "song-requests"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RetrixUY/StBot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RetrixUY/StBot/issues"
+  },
+  "homepage": "https://github.com/RetrixUY/StBot#readme",
   "dependencies": {
     "@streamerbot/client": "^1.12.2",
     "chalk": "^5.6.2",
