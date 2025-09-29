@@ -22,6 +22,8 @@ const subModuleColors: { [key: string]: ChalkInstance } = {
   kicks: chalk.hex('#32CD32'),       // Verde Lima
   poll: chalk.hex('#FF8C00'),        // Naranja Oscuro
   predict: chalk.hex('#6A5ACD'),    // Azul Pizarra
+  print: chalk.hex('#FF0000'),        // Rojo
+  send: chalk.hex('#00FF00'),        // Verde
   default: chalk.white,
 };
 

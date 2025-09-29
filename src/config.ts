@@ -13,4 +13,20 @@ export const cfg = {
       aceptRedemption: process.env.ACTION_ACEPT_REDEMPTION ?? "",
     }
   },
+  printer: {
+    enabled: process.env.PRINTER_ENABLED === 'true',
+    port: process.env.PRINTER_PORT ?? (process.platform === 'win32' ? 'COM4' : '/dev/rfcomm0'),
+    baudRate: 9600,
+    fontRegular: process.env.PRINTER_FONT_REGULAR ?? "C:/Windows/Fonts/arial.ttf",
+    fontBold: process.env.PRINTER_FONT_BOLD ?? "C:/Windows/Fonts/arialbd.ttf",
+    width: 384,
+    bt: {
+      mac: process.env.PRINTER_BT_MAC ?? "",
+      channel: Number(process.env.PRINTER_BT_CHANNEL ?? 2),
+    },
+    photo: {
+      maxWidth: 220,
+      maxHeight: 220,
+    }
+  }
 };

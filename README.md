@@ -23,6 +23,7 @@ Este proyecto es un backend de Node.js diseñado para potenciar tus streams. Se 
     * Muestra la canción que está sonando con carátula, artista y barra de progreso.
     * Sistema de **Song Request** canjeable a través de recompensas de canal.
 * **Overlays de Encuestas y Predicciones**: Visualiza en tiempo real las encuestas y predicciones de Streamer.bot.
+* **Integración con Impresora Térmica**: Genera e imprime tickets personalizados al recibir nuevos seguidores u otros eventos.
 * **Backend Robusto**: Construido con TypeScript, moderno y con reconexión automática a los servicios.
 * **Fácil de Configurar**: Todo se gestiona a través de un simple archivo de entorno.
 
@@ -37,6 +38,7 @@ Sigue estos pasos para poner en marcha el proyecto.
 * **Node.js**: v18 o superior.
 * **Streamer.bot**: Con la [extensión de Kick configurada](https://github.com/Sehelitar/Kick.bot).
 * **Cuenta de Desarrollador de Spotify**: Necesitarás crear una aplicación en el [Dashboard de Desarrolladores de Spotify](https://developer.spotify.com/dashboard) para obtener tus credenciales.
+* **Impresora Térmica (Opcional)**: Una impresora Bluetooth ESC/POS (como la [YHK-02BD](https://share.temu.com/5Jy0Dr0jJyA) o similar) si deseas usar la función de impresión.
 
 ### 2. Instalación
 
@@ -52,7 +54,7 @@ Sigue estos pasos para poner en marcha el proyecto.
 Este proyecto necesita un conjunto de acciones para funcionar. Las encontrarás en el archivo `Actions.txt`.
 
 1.  **Importa las Acciones**: En Streamer.bot, ve a la pestaña `Actions`. En el panel superior, haz clic derecho y selecciona `Import`. Busca y selecciona el archivo `Actions.txt` de este proyecto.
-2.  **Copia los IDs**: Una vez importadas, se crearán 4 nuevas acciones. Haz clic derecho sobre cada una de ellas, selecciona **`Copy Action ID`** y pega el ID en el archivo `.env` que crearás en el siguiente paso.
+2.  **Copia los IDs**: Una vez importadas, se crearán varias acciones. Haz clic derecho sobre cada una de ellas, selecciona **`Copy Action ID`** y pega el ID en el archivo `.env` que crearás en el siguiente paso.
 
 ### 4. Configuración del Entorno
 
@@ -81,13 +83,36 @@ Este proyecto necesita un conjunto de acciones para funcionar. Las encontrarás 
     ACTION_SEND_MESSAGE=ID_DE_LA_ACCION_PARA_ENVIAR_MENSAJE_AL_CHAT
     ACTION_REJECT_REDEMPTION=ID_DE_LA_ACCION_PARA_RECHAZAR_RECOMPENSA
     ACTION_ACEPT_REDEMPTION=ID_DE_LA_ACCION_PARA_ACEPTAR_RECOMPENSA
+
+    # -- IMPRESORA TÉRMICA (Opcional) --
+    PRINTER_ENABLED=false                 # true para habilitar la impresión
+    PRINTER_PORT=COM4                     # Puerto Serial o COM (ej: COM4 o /dev/rfcomm0)
+    PRINTER_FONT_REGULAR=C:/path/to/regular_font.ttf
+    PRINTER_FONT_BOLD=C:/path/to/bold_font.ttf
+    PRINTER_BT_MAC=AA:BB:CC:DD:EE:FF      # MAC de la impresora Bluetooth (necesario en Windows/Linux)
+    PRINTER_BT_CHANNEL=2                  # Canal RFCOMM (usualmente 1, 2 o 11, necesario para el binding en Linux)
     ```
 
 ### 5. Autorización de Spotify (Solo una vez)
 
-1.  Inicia el proyecto.
-2.  Abre tu navegador y ve a `http://localhost:4000/auth`.
-3.  Inicia sesión y autoriza la aplicación.
+1.  Abre tu navegador y ve a `http://localhost:4000/auth`.
+2.  Inicia sesión y autoriza la aplicación.
+
+---
+
+### 6. Integración con Impresora Térmica 🖨️
+
+Esta integración permite imprimir automáticamente un ticket personalizado (con el avatar de Kick, si está disponible) **cada vez que un nuevo usuario sigue el canal**.
+
+La función de impresión se activa automáticamente al recibir el evento `kickFollow` de Streamer.bot. No es necesario configurar ninguna acción de Streamer.bot adicional para este evento.
+
+#### 6.1. Requisitos y Configuración de Hardware
+
+1.  **Habilita la función**: Configura `PRINTER_ENABLED=true` en el archivo `.env`.
+2.  **Configuración de Puertos**:
+    * **Windows**: Asegúrate de que la impresora Bluetooth esté emparejada y el sistema le haya asignado un puerto COM (p. ej., `COM4`). La aplicación usará la `PRINTER_PORT` y la `PRINTER_BT_MAC` para intentar establecer la conexión serial.
+    * **Linux**: Debes configurar la conexión Bluetooth para el puerto serial RFCOMM. El valor de `PRINTER_PORT` debe coincidir con el dispositivo creado (ej: `/dev/rfcomm0`).
+3.  **Fuentes**: Las variables `PRINTER_FONT_REGULAR` y `PRINTER_FONT_BOLD` deben apuntar a archivos de fuente TrueType (`.ttf`) accesibles por el sistema para la generación de texto vectorial.
 
 ---
 
